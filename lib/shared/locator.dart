@@ -1,4 +1,5 @@
 import 'package:blog/shared/http_client.dart';
+import 'package:blog/shared/services/news.dart';
 import 'package:get_it/get_it.dart';
 
 class Locator {
@@ -11,5 +12,8 @@ class Locator {
     _i.registerSingleton<BlogHttp>(
       BlogHttp(defaultHeaders: {"Content-Type": "application/json"}),
     );
+
+    _i.registerLazySingleton<NewsService>(
+        () => NewsService(_i.get<BlogHttp>()));
   }
 }

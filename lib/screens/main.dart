@@ -1,4 +1,5 @@
-import 'package:blog/screens/login/main.dart';
+import 'package:blog/screens/home/main.dart';
+import 'package:blog/screens/list_blocs.dart';
 import 'package:blog/shared/locator.dart';
 import 'package:blog/shared/router.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,12 @@ class BlogMain extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-      title: 'Blog',
-      home: const LoginScreen(),
-      navigatorObservers: [route],
+    return ListBlocs(
+      child: MaterialApp(
+        title: 'Blog',
+        home: const HomeScreen(),
+        navigatorObservers: [route],
+      ),
     );
   }
 }
