@@ -19,7 +19,7 @@ class NewsService {
       );
 
       if (response.statusCode == 200) {
-        final _data = jsonDecode(response.body)["news"];
+        final _data = jsonDecode(utf8.decode(response.bodyBytes))["news"];
 
         debugPrint("response $_data");
 

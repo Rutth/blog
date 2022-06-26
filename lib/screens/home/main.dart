@@ -1,4 +1,5 @@
 import 'package:blog/bloc/news/news_bloc.dart';
+import 'package:blog/screens/home/widgets/item.dart';
 import 'package:blog/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
             } else if (state is ErrorLoadNewsState) {
               return Text(state.message);
             } else if (state is SuccessLoadNewsState) {
-              return const Text("ok");
+              return ListView.builder(
+                itemCount: state.list.length,
+                itemBuilder: (context, index) {
+                  final _item = state.list.elementAt(index);
+                  return ItemNewsList(news: _item);
+                },
+              );
             } else {
               return Container();
             }
