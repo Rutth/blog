@@ -1,9 +1,8 @@
-import 'package:blog/bloc/news/news_bloc.dart';
-import 'package:blog/screens/home/widgets/item.dart';
+import 'package:blog/screens/home/tabs/gb_news.dart';
+import 'package:blog/screens/home/tabs/my_news.dart';
+import 'package:blog/screens/home/widgets/slider_widget.dart';
 import 'package:blog/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,43 +11,95 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  TabController? _tabController;
+  late List<StatefulWidget> tabsContent;
+  late List<Widget> tabsTitle;
+  int _tabIndex = 0;
+
   @override
   void initState() {
-    BlocProvider.of<NewsBloc>(context).add(LoadNewsListEvent());
+    _setupTabs();
     super.initState();
+  }
+
+  _setupTabs() {
+    tabsContent = [];
+    tabsTitle = [];
+
+    tabsContent.add(const GbNewsTab());
+    tabsTitle.add(_tabTitle("GB"));
+
+    tabsContent.add(const MyNewsTab());
+    tabsTitle.add(_tabTitle("Minhas notícias"));
+
+    _tabController = TabController(
+      length: tabsContent.length,
+      vsync: this,
+      initialIndex: _tabIndex,
+    );
+    _tabController!.addListener(_updateIndex);
+  }
+
+  _updateIndex() {
+    setState(() {
+      _tabIndex = _tabController!.index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Notícias"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: blogBlue,
+        child: const Icon(Icons.add),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<NewsBloc, NewsState>(
-          builder: (context, state) {
-            if (state is LoadingNewsState) {
-              return const SpinKitThreeBounce(
-                color: blogBlue,
-              );
-            } else if (state is ErrorLoadNewsState) {
-              return Text(state.message);
-            } else if (state is SuccessLoadNewsState) {
-              return ListView.builder(
-                itemCount: state.list.length,
-                itemBuilder: (context, index) {
-                  final _item = state.list.elementAt(index);
-                  return ItemNewsList(news: _item);
-                },
-              );
-            } else {
-              return Container();
-            }
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 200.0,
+                floating: false,
+                pinned: true,
+                backgroundColor: blogBlue,
+                flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: const Text("Nome do usuário aqui",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        )),
+                    background: Container(
+                      color: blogBlue,
+                    )),
+              ),
+              SliverPersistentHeader(
+                delegate: SliverAppBarDelegate(
+                  TabBar(
+                      labelColor: Colors.black87,
+                      controller: _tabController,
+                      unselectedLabelColor: BlogColors.gray,
+                      tabs: tabsTitle),
+                ),
+              ),
+            ];
           },
+          body: TabBarView(
+            controller: _tabController,
+            children: tabsContent,
+          ),
         ),
       ),
     );
   }
+}
+
+Widget _tabTitle(String title) {
+  return Tab(
+    text: title,
+    icon: const Icon(Icons.list),
+  );
 }
