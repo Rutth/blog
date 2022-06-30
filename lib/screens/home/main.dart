@@ -1,5 +1,6 @@
 import 'package:blog/screens/home/tabs/gb_news.dart';
 import 'package:blog/screens/home/tabs/my_news.dart';
+import 'package:blog/screens/home/widgets/floating_btn.dart';
 import 'package:blog/screens/home/widgets/slider_widget.dart';
 import 'package:blog/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -50,11 +51,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: blogBlue,
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: const FloatingBtn(),
       body: DefaultTabController(
         length: 2,
         child: NestedScrollView(
@@ -95,11 +92,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
     );
   }
-}
 
-Widget _tabTitle(String title) {
-  return Tab(
-    text: title,
-    icon: const Icon(Icons.list),
-  );
+  Widget _tabTitle(String title) {
+    return Tab(
+      text: title,
+      icon: const Icon(Icons.list),
+    );
+  }
 }

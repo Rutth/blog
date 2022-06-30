@@ -23,6 +23,17 @@ class MyNewsBloc extends Bloc<MyNewsEvent, MyNewsState> {
         } on BlogException catch (ex) {
           emit(ErrorLoadMyNewsState(message: ex.message));
         }
+      } else if (event is AddNewsEvent) {
+        emit(LoadingSendNewsState());
+        try {
+          final _message = await Locator.instance
+              .get<MyNewsService>()
+              .addNew(cpf: event.cpf, content: event.content);
+
+          emit(SuccessSendNewsState(message: _message));
+        } on BlogException catch (ex) {
+          emit(ErrorSendNewsState(message: ex.message));
+        }
       }
     });
   }

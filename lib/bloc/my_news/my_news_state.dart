@@ -18,3 +18,17 @@ class ErrorLoadMyNewsState extends MyNewsState {
 
   ErrorLoadMyNewsState({required this.message});
 }
+
+class SuccessSendNewsState extends MyNewsState {
+  final String message;
+
+  SuccessSendNewsState({required this.message});
+}
+
+class ErrorSendNewsState extends MyNewsState {
+  final String message;
+
+  ErrorSendNewsState({required this.message});
+}
+
+class LoadingSendNewsState extends MyNewsState {}
