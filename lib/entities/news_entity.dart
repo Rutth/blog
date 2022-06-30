@@ -11,6 +11,8 @@ class News {
 
   News({required this.user, required this.message});
 
+  
+
   factory News.fromJson(Map json) => _$NewsFromJson(json);
   Map<String, dynamic> toJson() => _$NewsToJson(this);
 }

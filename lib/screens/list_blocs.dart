@@ -1,3 +1,4 @@
+import 'package:blog/bloc/my_news/my_news_bloc.dart';
 import 'package:blog/bloc/news/news_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class ListBlocs extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<NewsBloc>(create: (context) => NewsBloc()),
+        BlocProvider<MyNewsBloc>(create: (context) => MyNewsBloc()),
       ],
       child: child,
     );

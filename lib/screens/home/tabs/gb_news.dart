@@ -33,6 +33,7 @@ class _GbNewsTabState extends State<GbNewsTab> {
             return Text(state.message);
           } else if (state is SuccessLoadNewsState) {
             return ListView.builder(
+              shrinkWrap: true,
               itemCount: state.list.length,
               itemBuilder: (context, index) {
                 final _item = state.list.elementAt(index);

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:blog/entities/errors/exceptions.dart';
 import 'package:blog/entities/news_entity.dart';
 import 'package:blog/shared/locator.dart';
 import 'package:blog/shared/services/news.dart';
@@ -17,8 +18,8 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
           final _list = await Locator.instance.get<NewsService>().getNews();
 
           emit(SuccessLoadNewsState(list: _list));
-        } catch (ex) {
-          emit(ErrorLoadNewsState(message: '$ex'));
+        } on BlogException catch (ex) {
+          emit(ErrorLoadNewsState(message: ex.message));
         }
       }
     });

@@ -26,4 +26,6 @@ class BlogColors {
 
   static const Color darkBlue = Color.fromRGBO(3, 4, 94, 1);
   static const Color blue = Color.fromRGBO(0, 150, 199, 1);
+
+  static const Color red = Color.fromRGBO(230, 57, 70, 1);
 }
