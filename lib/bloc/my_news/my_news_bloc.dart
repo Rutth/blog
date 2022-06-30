@@ -34,6 +34,28 @@ class MyNewsBloc extends Bloc<MyNewsEvent, MyNewsState> {
         } on BlogException catch (ex) {
           emit(ErrorSendNewsState(message: ex.message));
         }
+      } else if (event is EditNewsEvent) {
+        emit(LoadingSendNewsState());
+        try {
+          final _message = await Locator.instance
+              .get<MyNewsService>()
+              .updateNews(id: event.id, content: event.content);
+
+          emit(SuccessSendNewsState(message: _message));
+        } on BlogException catch (ex) {
+          emit(ErrorSendNewsState(message: ex.message));
+        }
+      } else if (event is DeleteNewsEvent) {
+        emit(LoadingSendNewsState());
+        try {
+          final _message = await Locator.instance
+              .get<MyNewsService>()
+              .deleteNews(id: event.id);
+
+          emit(SuccessSendNewsState(message: _message));
+        } on BlogException catch (ex) {
+          emit(ErrorSendNewsState(message: ex.message));
+        }
       }
     });
   }

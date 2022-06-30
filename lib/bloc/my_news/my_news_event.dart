@@ -12,17 +12,15 @@ class LoadMyNewsEvent extends MyNewsEvent {
 class AddNewsEvent extends MyNewsEvent {
   final String cpf;
   final String content;
-  
 
   AddNewsEvent({required this.cpf, required this.content});
 }
 
 class EditNewsEvent extends MyNewsEvent {
-  final String cpf;
   final String content;
   final int id;
 
-  EditNewsEvent({required this.cpf, required this.content, required this.id});
+  EditNewsEvent({required this.content, required this.id});
 }
 
 class DeleteNewsEvent extends MyNewsEvent {

@@ -7,61 +7,70 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AlertContentNews extends StatelessWidget {
   final VoidCallback onPressed;
-  final bool editing;
   final Widget title;
-  final TextEditingController controller;
-  const AlertContentNews(
+  final TextEditingController? controller;
+  final bool deleting;
+  final _formKey = GlobalKey<FormState>();
+  AlertContentNews(
       {Key? key,
       required this.onPressed,
-      required this.editing,
       required this.title,
-      required this.controller})
+      this.controller,
+      required this.deleting})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-
     return AlertDialog(
         insetPadding: EdgeInsets.zero,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         title: title,
-        content: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: BlogColors.gray,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: BlogColors.gray, width: 1.0),
-                  ),
-                  hintText: 'Insira seu conteúdo aqui',
-                ),
-                keyboardType: TextInputType.multiline,
-                controller: controller,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Insira um texto';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-        ),
-        actions: [_content(_formKey)]);
+        content: _body(),
+        actions: [_content()]);
   }
 
-  Widget _content(_formKey) {
+  Widget _body() {
+    return deleting
+        ? const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Você deseja excluir este item?"),
+          )
+        : Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  maxLines: 5,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: BlogColors.gray,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: BlogColors.gray, width: 1.0),
+                    ),
+                    hintText: 'Insira seu conteúdo aqui',
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  controller: controller,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Insira um texto';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          );
+  }
+
+  Widget _content() {
     return BlocConsumer<MyNewsBloc, MyNewsState>(listener: (context, state) {
       if (state is SuccessSendNewsState) {
         Navigator.pop(context);
@@ -107,8 +116,12 @@ class AlertContentNews extends StatelessWidget {
             ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: blogBlue),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (deleting) {
                     onPressed();
+                  } else {
+                    if (_formKey.currentState!.validate()) {
+                      onPressed();
+                    }
                   }
                 },
                 child: const Text("Confirmar")),

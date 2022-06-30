@@ -31,11 +31,11 @@ class _FloatingBtnState extends State<FloatingBtn> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => AlertContentNews(
+            deleting: false,
             onPressed: () {
               BlocProvider.of<MyNewsBloc>(context).add(
                   AddNewsEvent(cpf: "07043125308", content: controller.text));
             },
-            editing: false,
             title: const Text("Adicione uma nova notícia"),
             controller: controller)).then((value) => controller.clear());
   }

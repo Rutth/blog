@@ -1,7 +1,6 @@
 import 'package:blog/entities/my_news_entity.dart';
 import 'package:blog/entities/news_entity.dart';
 import 'package:blog/screens/details/widgets/body.dart';
-import 'package:blog/screens/details/widgets/footer.dart';
 import 'package:blog/screens/details/widgets/header.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +29,6 @@ class _DetailsNewsScreenState extends State<DetailsNewsScreen> {
               mynews: widget.mynews,
               news: widget.news,
             ),
-            FooterDetails(
-              mynews: widget.mynews,
-            )
           ],
         ),
       ),
