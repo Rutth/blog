@@ -22,7 +22,6 @@ class AlertContentNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        insetPadding: EdgeInsets.zero,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         title: title,
@@ -36,36 +35,39 @@ class AlertContentNews extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text("Você deseja excluir este item?"),
           )
-        : Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  maxLines: 5,
-                  decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: BlogColors.gray,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: BlogColors.gray, width: 1.0),
+        : Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    maxLines: 5,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: BlogColors.gray,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: BlogColors.gray, width: 1.0),
+                      ),
+                      hintText: 'Insira seu conteúdo aqui',
                     ),
-                    hintText: 'Insira seu conteúdo aqui',
+                    keyboardType: TextInputType.multiline,
+                    controller: controller,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Insira um texto';
+                      }
+                      return null;
+                    },
                   ),
-                  keyboardType: TextInputType.multiline,
-                  controller: controller,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Insira um texto';
-                    }
-                    return null;
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           );
   }

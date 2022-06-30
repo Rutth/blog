@@ -42,6 +42,7 @@ class _ItemMyNewsState extends State<ItemMyNews> {
                   Expanded(
                     child: Text(
                       widget.news.content,
+                      overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.start,
                       style: const TextStyle(color: BlogColors.grayDark),
                     ),
