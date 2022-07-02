@@ -1,3 +1,5 @@
+import 'package:blog/screens/login/form.dart';
+import 'package:blog/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,12 +10,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-    );
+        backgroundColor: BlogColors.yellowPastel,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+               SizedBox(height: 220, child: Text("Tela de login")),
+               FormBody()
+            ],
+          ),
+        ));
   }
+
+  
 }

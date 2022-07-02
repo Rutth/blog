@@ -20,6 +20,7 @@ class BlogColors {
   static const Color grayLight = Color.fromRGBO(248, 249, 250, 1);
   static const Color grayLight2 = Color.fromRGBO(233, 236, 239, 1);
   static const Color grayLight3 = Color.fromRGBO(206, 212, 218, 1);
+  static const Color grayLight4 = Color.fromRGBO(220, 222, 221, 1);
   static const Color gray = Color.fromRGBO(173, 181, 189, 1);
   static const Color grayDark = Color.fromRGBO(52, 58, 64, 1);
   static const Color grayDark2 = Color.fromRGBO(33, 37, 41, 1);
@@ -28,4 +29,5 @@ class BlogColors {
   static const Color blue = Color.fromRGBO(0, 150, 199, 1);
 
   static const Color red = Color.fromRGBO(230, 57, 70, 1);
+  static const Color yellowPastel = Color.fromRGBO(249, 220, 196, 1);
 }
