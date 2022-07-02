@@ -1,6 +1,7 @@
 import 'package:blog/shared/http_client.dart';
 import 'package:blog/shared/services/my_news.dart';
 import 'package:blog/shared/services/news.dart';
+import 'package:blog/shared/services/user.dart';
 import 'package:get_it/get_it.dart';
 
 class Locator {
@@ -19,5 +20,8 @@ class Locator {
 
     _i.registerLazySingleton<MyNewsService>(
         () => MyNewsService(_i.get<BlogHttp>()));
+
+    _i.registerLazySingleton<UserService>(
+        () => UserService(_i.get<BlogHttp>()));
   }
 }

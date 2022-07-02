@@ -78,7 +78,6 @@ class _ItemMyNewsState extends State<ItemMyNews> {
   }
 
   void _onPressedEdit() {
-    //TODO mudar cpf para cpf logado
     controller.text = widget.news.content;
     showDialog(
         context: context,

@@ -1,4 +1,5 @@
 import 'package:blog/bloc/my_news/my_news_bloc.dart';
+import 'package:blog/bloc/profile/profile_bloc.dart';
 import 'package:blog/shared/styles/colors.dart';
 import 'package:blog/shared/widgets/alert_content.dart';
 import 'package:flutter/material.dart';
@@ -26,15 +27,16 @@ class _FloatingBtnState extends State<FloatingBtn> {
   }
 
   void _onPressedFloatingBtn() {
-    //TODO mudar cpf para cpf logado
+   
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => AlertContentNews(
             deleting: false,
             onPressed: () {
-              BlocProvider.of<MyNewsBloc>(context).add(
-                  AddNewsEvent(cpf: "07043125308", content: controller.text));
+              BlocProvider.of<MyNewsBloc>(context).add(AddNewsEvent(
+                  cpf: BlocProvider.of<ProfileBloc>(context).perfil.cpf,
+                  content: controller.text));
             },
             title: const Text("Adicione uma nova notícia"),
             controller: controller)).then((value) => controller.clear());

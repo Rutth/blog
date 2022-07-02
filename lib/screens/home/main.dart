@@ -1,9 +1,11 @@
+import 'package:blog/bloc/profile/profile_bloc.dart';
 import 'package:blog/screens/home/tabs/gb_news.dart';
 import 'package:blog/screens/home/tabs/my_news.dart';
 import 'package:blog/screens/home/widgets/floating_btn.dart';
 import 'package:blog/screens/home/widgets/slider_widget.dart';
 import 'package:blog/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,11 +19,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late List<StatefulWidget> tabsContent;
   late List<Widget> tabsTitle;
   int _tabIndex = 0;
+  String nameUser = "";
 
   @override
   void initState() {
     _setupTabs();
+    _loadInfo();
     super.initState();
+  }
+
+  void _loadInfo() {
+    nameUser = BlocProvider.of<ProfileBloc>(context).perfil.nameFormatted;
   }
 
   _setupTabs() {
@@ -64,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 backgroundColor: blogBlue,
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
-                    title: const Text("Nome do usuário aqui",
-                        style: TextStyle(
+                    title: Text(nameUser,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16.0,
                         )),

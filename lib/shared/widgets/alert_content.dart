@@ -1,4 +1,5 @@
 import 'package:blog/bloc/my_news/my_news_bloc.dart';
+import 'package:blog/bloc/profile/profile_bloc.dart';
 import 'package:blog/shared/styles/colors.dart';
 import 'package:blog/shared/widgets/alert.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,6 @@ class AlertContentNews extends StatelessWidget {
     return BlocConsumer<MyNewsBloc, MyNewsState>(listener: (context, state) {
       if (state is SuccessSendNewsState) {
         Navigator.pop(context);
-        //TODO cpf usuario logado
         showDialog(
             context: context,
             builder: (BuildContext context) => CustomAlert(
@@ -87,12 +87,11 @@ class AlertContentNews extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    BlocProvider.of<MyNewsBloc>(context)
-                        .add(LoadMyNewsEvent(cpf: "07043125308"));
+                    BlocProvider.of<MyNewsBloc>(context).add(LoadMyNewsEvent(
+                        cpf: BlocProvider.of<ProfileBloc>(context).perfil.cpf));
                   },
                 ));
       } else if (state is ErrorSendNewsState) {
-        //TODO cpf usuario logado
         showDialog(
             context: context,
             builder: (BuildContext context) => CustomAlert(
@@ -103,8 +102,8 @@ class AlertContentNews extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    BlocProvider.of<MyNewsBloc>(context)
-                        .add(LoadMyNewsEvent(cpf: "07043125308"));
+                    BlocProvider.of<MyNewsBloc>(context).add(LoadMyNewsEvent(
+                        cpf: BlocProvider.of<ProfileBloc>(context).perfil.cpf));
                   },
                 ));
       }

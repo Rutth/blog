@@ -7,12 +7,14 @@ class TextFieldCustom extends StatelessWidget {
   final MaskTextInputFormatter? mask;
   final String? hintText;
   final IconData icon;
+  final bool? obscureText;
 
   const TextFieldCustom(
       {Key? key,
       required this.controller,
       this.mask,
       this.hintText,
+      this.obscureText = false,
       required this.icon})
       : super(key: key);
 
@@ -24,12 +26,19 @@ class TextFieldCustom extends StatelessWidget {
               secondary: Colors.black,
             ),
       ),
-      child: TextField(
+      child: TextFormField(
         cursorColor: BlogColors.grayDark,
         keyboardType: TextInputType.number,
         style: const TextStyle(color: BlogColors.grayDark, fontSize: 14),
         controller: controller,
         inputFormatters: mask != null ? [mask!] : null,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Campo obrigatório';
+          }
+          return null;
+        },
+        obscureText: obscureText!,
         decoration: InputDecoration(
           prefixIcon: Icon(
             icon,

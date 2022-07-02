@@ -28,10 +28,12 @@ class NewsService {
 
         return _collection;
       } else {
+        debugPrint(response.body);
         throw GeneralException("Ocorreu um erro! Tente novamente");
       }
     } catch (ex) {
-      rethrow;
+      debugPrint('$ex');
+      throw GeneralException("Ocorreu um erro! Tente novamente");
     }
   }
 }

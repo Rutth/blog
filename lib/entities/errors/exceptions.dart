@@ -16,3 +16,7 @@ class TimeoutException extends BlogException {
 class GeneralException extends BlogException {
   GeneralException(String message) : super(message);
 }
+
+class ProfileException extends BlogException {
+  ProfileException(String message) : super(message);
+}
