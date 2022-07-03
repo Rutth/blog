@@ -13,13 +13,16 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: BlogColors.yellowPastel,
         appBar: AppBar(
-//        backgroundColor: Colors.transparent,
-          backgroundColor: blogBlue[200],
+          iconTheme: const IconThemeData(color: BlogColors.grayDark),
+          backgroundColor: BlogColors.yellowPastel,
           elevation: 0,
-          title: const Text("Cadastre-se"),
+          title: const Text(
+            "Cadastre-se",
+            style: TextStyle(color: BlogColors.grayDark),
+          ),
         ),
-        backgroundColor: blogBlue[200],
         body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,

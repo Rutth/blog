@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:blog/entities/errors/exceptions.dart';
 import 'package:blog/entities/profile_entity.dart';
+import 'package:blog/shared/constants.dart';
 import 'package:blog/shared/http_client.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   final BlogHttp http;
@@ -23,6 +25,9 @@ class UserService {
         final _data = jsonDecode(response.body);
 
         debugPrint("response $_data");
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(Constants.userLogged, _data);
 
         return Profile.fromJson(_data);
       } else {
@@ -69,6 +74,16 @@ class UserService {
       }
     } on ProfileException catch (ex) {
       throw ProfileException(ex.message);
+    } catch (ex) {
+      debugPrint('$ex');
+      throw GeneralException("Ocorreu um erro! Tente novamente");
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.remove(Constants.userLogged);
     } catch (ex) {
       debugPrint('$ex');
       throw GeneralException("Ocorreu um erro! Tente novamente");

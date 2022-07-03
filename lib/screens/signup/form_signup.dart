@@ -95,7 +95,7 @@ class _FormSignupState extends State<FormSignup> {
 
   void _onPressed() {
     if (_formKey.currentState!.validate()) {
-      BlocProvider.of<ProfileBloc>(context).add(SignupUser(
+      BlocProvider.of<ProfileBloc>(context).add(SignupUserEvent(
           cpf: maskCpfFormatter.getUnmaskedText(),
           password: passwordController.text,
           name: nameController.text,

@@ -3,22 +3,26 @@ part of 'profile_bloc.dart';
 @immutable
 abstract class ProfileEvent {}
 
-class LoginUser extends ProfileEvent {
+class LoginUserEvent extends ProfileEvent {
   final String cpf;
   final String password;
 
-  LoginUser({required this.cpf, required this.password});
+  LoginUserEvent({required this.cpf, required this.password});
 }
 
-class SignupUser extends ProfileEvent {
+class SignupUserEvent extends ProfileEvent {
   final String cpf;
   final String name;
   final String email;
   final String password;
 
-  SignupUser(
+  SignupUserEvent(
       {required this.cpf,
       required this.password,
       required this.name,
       required this.email});
 }
+
+class LogoutEvent extends ProfileEvent {}
+
+class CheckLoggedEvent extends ProfileEvent {}

@@ -99,7 +99,7 @@ class _FormBodyState extends State<FormBody> {
 
   void _onPressedLogin() {
     if (_formKey.currentState!.validate()) {
-      BlocProvider.of<ProfileBloc>(context).add(LoginUser(
+      BlocProvider.of<ProfileBloc>(context).add(LoginUserEvent(
           cpf: maskCpfFormatter.getUnmaskedText(),
           password: passwordController.text));
     }

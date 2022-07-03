@@ -4,6 +4,7 @@ import 'package:blog/screens/home/tabs/my_news.dart';
 import 'package:blog/screens/home/widgets/floating_btn.dart';
 import 'package:blog/screens/home/widgets/slider_widget.dart';
 import 'package:blog/shared/styles/colors.dart';
+import 'package:blog/shared/widgets/alert_logout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,11 +73,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 backgroundColor: blogBlue,
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
-                    title: Text(nameUser,
-                        style: const TextStyle(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Text(nameUser,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              )),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            _showDialog();
+                          },
+                          icon: const Icon(Icons.logout),
+                          iconSize: 20,
                           color: Colors.white,
-                          fontSize: 16.0,
-                        )),
+                        )
+                      ],
+                    ),
                     background: Container(
                       color: blogBlue,
                     )),
@@ -106,5 +123,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       text: title,
       icon: const Icon(Icons.list),
     );
+  }
+
+  void _showDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => const AlertLogout());
   }
 }

@@ -19,7 +19,6 @@ class SuccessLoginUser extends ProfileState {
 
 class LoadingLoginUser extends ProfileState {}
 
-
 class ErrorSignupUser extends ProfileState {
   final String message;
 
@@ -33,3 +32,11 @@ class SuccessSignupUser extends ProfileState {
 }
 
 class LoadingSignupUser extends ProfileState {}
+
+class ErrorLogout extends ProfileState {
+  final String message;
+
+  ErrorLogout({required this.message});
+}
+
+class SuccessLogout extends ProfileState {}

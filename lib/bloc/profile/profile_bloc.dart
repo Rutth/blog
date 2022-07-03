@@ -14,7 +14,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) async {
-      if (event is LoginUser) {
+      if (event is LoginUserEvent) {
         emit(LoadingLoginUser());
 
         try {
@@ -26,7 +26,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         } on BlogException catch (ex) {
           emit(ErrorLoginUser(message: ex.message));
         }
-      } else if (event is SignupUser) {
+      } else if (event is SignupUserEvent) {
         emit(LoadingSignupUser());
 
         try {
@@ -41,6 +41,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           emit(SuccessSignupUser(message: _msg));
         } on BlogException catch (ex) {
           emit(ErrorSignupUser(message: ex.message));
+        }
+      } else if (event is LogoutEvent) {
+        try {
+          
+          emit(SuccessLogout());
+        } on BlogException catch (ex) {
+          emit(ErrorLogout(message: ex.message));
         }
       }
     });

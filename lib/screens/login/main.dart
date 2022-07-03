@@ -12,21 +12,22 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
-      child: Scaffold(
-          backgroundColor: BlogColors.yellowPastel,
-          body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                SizedBox(height: 220, child: Text("Tela de cadastro")),
-                FormBody()
-              ],
-            ),
-          )),
-    );
+    return Scaffold(
+        backgroundColor: BlogColors.yellowPastel,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(16.0),
+                  height: 220,
+                  child: const Image(
+                      image: AssetImage(
+                    'assets/logo.png',
+                  ))),
+              const FormBody()
+            ],
+          ),
+        ));
   }
 }
