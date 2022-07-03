@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:blog/entities/errors/exceptions.dart';
 import 'package:blog/entities/profile_entity.dart';
+import 'package:blog/entities/user_login_entity.dart';
 import 'package:blog/shared/constants.dart';
 import 'package:blog/shared/http_client.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,7 @@ class UserService {
 
         debugPrint("response $_data");
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(Constants.userLogged, _data);
+        setUser(cpf, password);
 
         return Profile.fromJson(_data);
       } else {
@@ -80,10 +80,30 @@ class UserService {
     }
   }
 
+  Future<void> setUser(String cpf, String password) async {
+    //TODO encrypt
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(Constants.userLogged, cpf);
+    prefs.setString(Constants.passwordLogged, password);
+  }
+
+  Future<UserLogin> getUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? _cpf = prefs.getString(Constants.userLogged);
+    final String? _password = prefs.getString(Constants.passwordLogged);
+
+    if (_cpf != null && _password != null) {
+      return UserLogin(cpf: _cpf, password: _password);
+    } else {
+      throw ProfileException("Não possui usuário logado");
+    }
+  }
+
   Future<void> logout() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove(Constants.userLogged);
+      prefs.remove(Constants.passwordLogged);
     } catch (ex) {
       debugPrint('$ex');
       throw GeneralException("Ocorreu um erro! Tente novamente");

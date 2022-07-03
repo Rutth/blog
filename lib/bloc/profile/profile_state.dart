@@ -40,3 +40,17 @@ class ErrorLogout extends ProfileState {
 }
 
 class SuccessLogout extends ProfileState {}
+
+class LoadingCheckUser extends ProfileState {}
+
+class ErrorCheckUser extends ProfileState {
+  final String message;
+
+  ErrorCheckUser({required this.message});
+}
+
+class SuccessCheckUser extends ProfileState {
+  final UserLogin userLogin;
+
+  SuccessCheckUser({required this.userLogin});
+}

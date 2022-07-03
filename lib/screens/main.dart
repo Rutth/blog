@@ -1,5 +1,6 @@
 import 'package:blog/screens/list_blocs.dart';
-import 'package:blog/screens/login/main.dart';
+
+import 'package:blog/screens/splash.dart';
 import 'package:blog/shared/locator.dart';
 import 'package:blog/shared/router.dart';
 import 'package:blog/shared/styles/colors.dart';
@@ -22,7 +23,7 @@ class BlogMain extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: BlogColors.grayLight),
         title: 'Blog',
-        home: const LoginScreen(),
+        home: const SplashScreen(),
         navigatorObservers: [route],
       ),
     );

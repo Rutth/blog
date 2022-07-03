@@ -1,6 +1,8 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:blog/entities/errors/exceptions.dart';
 import 'package:blog/entities/profile_entity.dart';
+import 'package:blog/entities/user_login_entity.dart';
 import 'package:blog/shared/locator.dart';
 import 'package:blog/shared/services/user.dart';
 import 'package:meta/meta.dart';
@@ -44,10 +46,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }
       } else if (event is LogoutEvent) {
         try {
-          
+          await Locator.instance.get<UserService>().logout();
           emit(SuccessLogout());
         } on BlogException catch (ex) {
           emit(ErrorLogout(message: ex.message));
+        }
+      } else if (event is CheckLoggedEvent) {
+        emit(LoadingCheckUser());
+        try {
+          final UserLogin _user =
+              await Locator.instance.get<UserService>().getUser();
+emit(SuccessCheckUser(
+                userLogin:
+                    UserLogin(cpf: _user.cpf, password: _user.password)));
+          
+        } on BlogException catch (ex) {
+          emit(ErrorCheckUser(message: ex.message));
         }
       }
     });
