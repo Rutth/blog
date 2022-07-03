@@ -37,4 +37,41 @@ class UserService {
       throw GeneralException("Ocorreu um erro! Tente novamente");
     }
   }
+
+  Future<String> signupUser(
+      {required String cpf,
+      required String password,
+      required String email,
+      required String name}) async {
+    try {
+      const String _url = 'http://localhost:3000/users/add';
+
+      final Map<String, dynamic> _body = {
+        "cpf": cpf,
+        "password": password,
+        "email": email,
+        "name": name
+      };
+
+      final response =
+          await http.post(Uri.parse(_url), body: jsonEncode(_body));
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        final _message = jsonDecode(response.body)["message"];
+
+        debugPrint("response ${response.body}");
+
+        return _message;
+      } else {
+        debugPrint(response.body);
+        final String _message = jsonDecode(response.body)["message"];
+        throw ProfileException(_message);
+      }
+    } on ProfileException catch (ex) {
+      throw ProfileException(ex.message);
+    } catch (ex) {
+      debugPrint('$ex');
+      throw GeneralException("Ocorreu um erro! Tente novamente");
+    }
+  }
 }

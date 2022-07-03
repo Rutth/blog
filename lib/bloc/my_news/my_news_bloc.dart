@@ -19,7 +19,9 @@ class MyNewsBloc extends Bloc<MyNewsEvent, MyNewsState> {
               .get<MyNewsService>()
               .getMyNews(cpf: event.cpf);
 
-          emit(SuccessLoadMyNewsState(list: _list));
+          emit(_list.isNotEmpty
+              ? SuccessLoadMyNewsState(list: _list)
+              : NoDataState());
         } on BlogException catch (ex) {
           emit(ErrorLoadMyNewsState(message: ex.message));
         }

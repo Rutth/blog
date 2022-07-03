@@ -26,6 +26,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         } on BlogException catch (ex) {
           emit(ErrorLoginUser(message: ex.message));
         }
+      } else if (event is SignupUser) {
+        emit(LoadingSignupUser());
+
+        try {
+          final String _msg = await Locator.instance
+              .get<UserService>()
+              .signupUser(
+                  cpf: event.cpf,
+                  password: event.password,
+                  email: event.email,
+                  name: event.name);
+
+          emit(SuccessSignupUser(message: _msg));
+        } on BlogException catch (ex) {
+          emit(ErrorSignupUser(message: ex.message));
+        }
       }
     });
   }

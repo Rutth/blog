@@ -18,3 +18,18 @@ class SuccessLoginUser extends ProfileState {
 }
 
 class LoadingLoginUser extends ProfileState {}
+
+
+class ErrorSignupUser extends ProfileState {
+  final String message;
+
+  ErrorSignupUser({required this.message});
+}
+
+class SuccessSignupUser extends ProfileState {
+  final String message;
+
+  SuccessSignupUser({required this.message});
+}
+
+class LoadingSignupUser extends ProfileState {}

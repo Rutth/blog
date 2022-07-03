@@ -8,6 +8,7 @@ class TextFieldCustom extends StatelessWidget {
   final String? hintText;
   final IconData icon;
   final bool? obscureText;
+  final Function(String) validators;
 
   const TextFieldCustom(
       {Key? key,
@@ -15,6 +16,7 @@ class TextFieldCustom extends StatelessWidget {
       this.mask,
       this.hintText,
       this.obscureText = false,
+      required this.validators,
       required this.icon})
       : super(key: key);
 
@@ -32,12 +34,7 @@ class TextFieldCustom extends StatelessWidget {
         style: const TextStyle(color: BlogColors.grayDark, fontSize: 14),
         controller: controller,
         inputFormatters: mask != null ? [mask!] : null,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Campo obrigatório';
-          }
-          return null;
-        },
+        validator: (value) => validators(value!),
         obscureText: obscureText!,
         decoration: InputDecoration(
           prefixIcon: Icon(

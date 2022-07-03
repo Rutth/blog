@@ -1,6 +1,9 @@
 import 'package:blog/bloc/profile/profile_bloc.dart';
 import 'package:blog/screens/login/widgets/button_login.dart';
+import 'package:blog/screens/signup/main.dart';
+import 'package:blog/shared/scale.transition.dart';
 import 'package:blog/shared/styles/colors.dart';
+import 'package:blog/shared/validators.dart';
 import 'package:blog/shared/widgets/text_field_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,6 +58,7 @@ class _FormBodyState extends State<FormBody> {
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFieldCustom(
+                      validators: (value) => Validators.cpf(value),
                       icon: Icons.perm_contact_cal,
                       controller: cpfController,
                       mask: maskCpfFormatter,
@@ -63,6 +67,7 @@ class _FormBodyState extends State<FormBody> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFieldCustom(
+                    validators: (value) => Validators.requiredField(value),
                     icon: Icons.lock,
                     hintText: "Senha",
                     obscureText: true,
@@ -83,7 +88,11 @@ class _FormBodyState extends State<FormBody> {
           onPressed: _onPressedLogin,
           formKey: _formKey,
         ),
-        TextButton(onPressed: () {}, child: const Text("Cadastre-se"))
+        TextButton(
+            onPressed: () {
+              Navigator.push(context, ScaleRoute(page: const SignupScreen()));
+            },
+            child: const Text("Cadastre-se"))
       ],
     );
   }

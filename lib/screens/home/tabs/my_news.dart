@@ -1,4 +1,5 @@
 import 'package:blog/bloc/my_news/my_news_bloc.dart';
+import 'package:blog/bloc/profile/profile_bloc.dart';
 import 'package:blog/screens/home/widgets/item_my_new.dart';
 import 'package:blog/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,8 @@ class MyNewsTab extends StatefulWidget {
 class _MyNewsTabState extends State<MyNewsTab> {
   @override
   void initState() {
-    BlocProvider.of<MyNewsBloc>(context)
-        .add(LoadMyNewsEvent(cpf: '07043125308'));
+    BlocProvider.of<MyNewsBloc>(context).add(
+        LoadMyNewsEvent(cpf: BlocProvider.of<ProfileBloc>(context).perfil.cpf));
     super.initState();
   }
 
@@ -40,6 +41,11 @@ class _MyNewsTabState extends State<MyNewsTab> {
                 final _item = state.list.elementAt(index);
                 return ItemMyNews(news: _item);
               },
+            );
+          } else if (state is NoDataState) {
+            return const Text(
+              "Você não possui notícias postadas!",
+              textAlign: TextAlign.center,
             );
           } else {
             return Container();

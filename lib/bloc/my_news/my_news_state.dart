@@ -32,3 +32,5 @@ class ErrorSendNewsState extends MyNewsState {
 }
 
 class LoadingSendNewsState extends MyNewsState {}
+
+class NoDataState extends MyNewsState {}
